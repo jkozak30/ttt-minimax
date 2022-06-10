@@ -1,5 +1,6 @@
 var turn = 0;
 var g;
+var x = 0;
 
 class Game {
   constructor() {
@@ -72,16 +73,19 @@ class Game {
   }
 
   minimax(max) {
+    //console.log(this.str());
     if (this.win() == 1) return 1;
     if (this.win() == -1) return -1;
     if (!this.canMove()) return 0;
     else {
       if (max) {
+        //console.log("here" + x);
+        x++;
         let score = -1;
         for (var i=0; i<3; i++) {
           for (var j=0; j<3; j++) {
             if (this.canMoveHere(i, j)) {
-              this.move("x", i, j);
+              this.move(1, i, j);
               score = Math.max(score, this.minimax(false));
               this.remove(i, j);
             }
@@ -93,7 +97,7 @@ class Game {
         for (var i=0; i<3; i++) {
           for (var j=0; j<3; j++) {
             if (this.canMoveHere(i, j)) {
-              this.move("o", i, j);
+              this.move(2, i, j);
               score = Math.min(score, this.minimax(true));
               this.remove(i, j);
             }
